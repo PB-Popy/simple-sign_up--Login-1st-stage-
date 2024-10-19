@@ -9,6 +9,7 @@ def signupPage (request):
     
     if request.method=='POST':
         
+        profile_pic=request.FILES.get('profile_pic')
         username=request.POST.get('username')
         email=request.POST.get('email')
         password=request.POST.get('password')
@@ -21,6 +22,7 @@ def signupPage (request):
         if password==confirm_password:
 
             user=CustomUser.objects.create_user(
+                profile_pic=profile_pic,
                 username=username,
                 email=email,
                 password=password,
@@ -30,6 +32,12 @@ def signupPage (request):
                 contact_no=contact_no,
                
             )
+
+            if usertype=='viewer':
+                viewersProfileModel.objects.create(user=user)
+
+            elif usertype=='blogger':
+                BloggerProfileModel.objects.create(user=user)
 
             return redirect('signInPage')
     
@@ -64,3 +72,7 @@ def logoutPage(request):
 @login_required
 def homePage(request):
     return render(request, 'homePage.html')
+
+@login_required
+def ProfilePage(request):
+    return render(request, 'ProfilePage.html')

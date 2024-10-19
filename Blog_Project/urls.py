@@ -10,5 +10,6 @@ urlpatterns = [
     path("", signInPage, name="signInPage"),
     path("logoutPage", logoutPage, name="logoutPage"),
     path("homePage", homePage, name="homePage"),
+    path("ProfilePage", ProfilePage, name="ProfilePage"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
